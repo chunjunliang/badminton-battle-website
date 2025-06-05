@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badminton Battle - VR Badminton Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .language-switcher a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switcher a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        main {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .platforms {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .platforms h2 {
+            color: white;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .platform-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .platform-card:hover {
+            transform: scale(1.05);
+        }
+
+        .platform-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .screenshots {
+            text-align: center;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .screenshot-placeholder {
+            height: 200px;
+            background: linear-gradient(45deg, #f1f2f6, #ddd);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #666;
+            border: 2px dashed #bbb;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .language-switcher {
+                position: static;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="language-switcher">
+            <a href="index.html">中文</a>
+            <a href="index-en.html" style="background: rgba(255, 255, 255, 0.2);">English</a>
+        </div>
+        <div class="container">
+            <div class="header-content">
+                <h1>Badminton Battle</h1>
+                <p class="subtitle">Immersive VR Badminton Experience - Swing Your Way to Victory!</p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        🏪 Download Now
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        ✨ Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="section" id="about">
+                <h2>About the Game</h2>
+                <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto; color: #555;">
+                    Badminton Battle is a revolutionary VR badminton game that delivers an unprecedented immersive sports experience. 
+                    Through cutting-edge VR technology, you can engage in intense matches against AI opponents or global players 
+                    on virtual courts, experiencing the authentic charm of badminton sports anytime and anywhere.
+                </p>
+            </section>
+
+            <section class="section" id="features">
+                <h2>Game Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏸</div>
+                        <h3>Realistic Physics Engine</h3>
+                        <p>Advanced physics engine perfectly simulates shuttlecock flight trajectories and landing points, providing the most authentic hitting experience.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>Intelligent AI Opponents</h3>
+                        <p>Multiple difficulty levels of AI opponents, from beginner to professional level, progressively improving your skill level.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Online Multiplayer</h3>
+                        <p>Real-time battles with global players, featuring ranked matches and friendly games to showcase your badminton skills.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏟️</div>
+                        <h3>Diverse Environments</h3>
+                        <p>From classic indoor gymnasiums to unique settings like beaches and forests, each environment offers a different gaming experience.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Training Mode</h3>
+                        <p>Professional training mode helps you master various badminton techniques, including serves, smashes, and net play.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Statistics Tracking</h3>
+                        <p>Detailed game statistics track your progress, analyze strengths and weaknesses, and continuously improve your skills.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="screenshots">
+                <h2>Game Screenshots</h2>
+                <div class="screenshot-grid">
+                    <div class="screenshot-placeholder">
+                        Main Menu
+                    </div>
+                    <div class="screenshot-placeholder">
+                        Battle Scene
+                    </div>
+                    <div class="screenshot-placeholder">
+                        Training Mode
+                    </div>
+                    <div class="screenshot-placeholder">
+                        Multiplayer Game
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="platforms" id="download">
+            <div class="container">
+                <h2>Supported Platforms</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Now officially available on the following platforms</p>
+                <div class="platform-grid">
+                    <div class="platform-card">
+                        <div class="platform-logo">🥽</div>
+                        <h3>PICO Store</h3>
+                        <p>Compatible with PICO 4, PICO 4 Enterprise, and more</p>
+                        <a href="#" class="btn btn-primary" style="margin-top: 1rem;">
+                            Visit PICO Store
+                        </a>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-logo">🔮</div>
+                        <h3>Meta Store</h3>
+                        <p>Compatible with Quest 2, Quest 3, Quest Pro, and more</p>
+                        <a href="#" class="btn btn-primary" style="margin-top: 1rem;">
+                            Visit Meta Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>📧 support@badmintonbattle.com</li>
+                        <li>🌐 www.badmintonbattle.com</li>
+                        <li>📱 Follow us on social media</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>System Requirements</h3>
+                    <ul class="contact-info">
+                        <li>PICO 4 / PICO 4 Enterprise</li>
+                        <li>Meta Quest 2 / Quest 3 / Quest Pro</li>
+                        <li>At least 2GB available storage</li>
+                        <li>Stable internet connection (multiplayer mode)</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Game Information</h3>
+                    <ul class="contact-info">
+                        <li>🎮 Sports & Fitness Game</li>
+                        <li>👥 Single/Multiplayer Support</li>
+                        <li>🌟 Suitable for all ages</li>
+                        <li>🏆 Competitive Leaderboard System</li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border: none; height: 1px; background: #34495e; margin: 2rem 0;">
+            <p>&copy; 2024 Badminton Battle. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling effect
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation effects
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Add animation to all cards
+        document.querySelectorAll('.feature-card, .platform-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html> 
