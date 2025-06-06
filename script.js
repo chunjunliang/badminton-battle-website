@@ -87,4 +87,44 @@
                     document.body.style.overflow = 'auto';
                 }
             });
+
+            // 移动端语言切换按钮优化
+            const languageSwitcher = document.querySelector('.language-switcher');
+            if (languageSwitcher) {
+                // 为移动端添加触摸事件
+                const links = languageSwitcher.querySelectorAll('a');
+                links.forEach(link => {
+                    // 添加触摸开始事件
+                    link.addEventListener('touchstart', function(e) {
+                        this.style.background = 'rgba(255, 255, 255, 0.2)';
+                    }, { passive: true });
+
+                    // 添加触摸结束事件
+                    link.addEventListener('touchend', function(e) {
+                        this.style.background = '';
+                        // 确保链接能够正常跳转
+                        setTimeout(() => {
+                            if (this.href) {
+                                window.location.href = this.href;
+                            }
+                        }, 100);
+                    }, { passive: true });
+
+                    // 防止触摸取消时样式残留
+                    link.addEventListener('touchcancel', function(e) {
+                        this.style.background = '';
+                    }, { passive: true });
+
+                    // 为点击事件添加额外保障
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const href = this.getAttribute('href');
+                        if (href) {
+                            setTimeout(() => {
+                                window.location.href = href;
+                            }, 50);
+                        }
+                    });
+                });
+            }
         });

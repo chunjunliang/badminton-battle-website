@@ -379,21 +379,32 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 10;
+            z-index: 1000; /* 增加z-index确保不被覆盖 */
         }
 
         .language-switcher a {
             color: white;
             text-decoration: none;
-            padding: 8px 16px;
+            padding: 12px 18px; /* 增加触摸区域 */
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 20px;
             margin-left: 10px;
             transition: all 0.3s ease;
+            display: inline-block; /* 确保块级显示 */
+            min-width: 44px; /* 移动端最小触摸区域 */
+            text-align: center;
+            /* 移动端触摸优化 */
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
-        .language-switcher a:hover {
+        .language-switcher a:hover,
+        .language-switcher a:focus,
+        .language-switcher a:active {
             background: rgba(255, 255, 255, 0.2);
+            outline: none; /* 移除默认焦点样式 */
         }
 
         @media (max-width: 768px) {
@@ -423,6 +434,22 @@
                 position: static;
                 text-align: center;
                 margin-bottom: 2rem;
+                z-index: 1000;
+            }
+
+            .language-switcher a {
+                padding: 15px 25px; /* 移动端更大的触摸区域 */
+                margin: 0 8px; /* 调整间距 */
+                font-size: 1rem;
+                min-width: 80px; /* 更大的最小宽度 */
+                /* 强制硬件加速，提升触摸响应 */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+            }
+
+            .language-switcher a:active {
+                transform: translateZ(0) scale(0.95); /* 点击反馈 */
+                -webkit-transform: translateZ(0) scale(0.95);
             }
 
             .screenshot-grid {
