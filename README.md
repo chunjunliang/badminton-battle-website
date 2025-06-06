@@ -41,15 +41,15 @@
 ### 1. 下载链接
 ```html
 <!-- 需要替换为实际的商店链接 -->
-<a href="#" class="btn btn-primary">前往PICO商店</a>
-<a href="#" class="btn btn-primary">前往Meta商店</a>
+<a href="https://www.picoxr.com/" class="btn btn-primary">前往PICO商店</a>
+<a href="https://www.meta.com/quest/" class="btn btn-primary">前往Meta商店</a>
 ```
 
 ### 2. 联系信息
 ```html
 <!-- 更新为实际的联系方式 -->
-<li>📧 support@badmintonbattle.com</li>
-<li>🌐 www.badmintonbattle.com</li>
+<li>📧 contact@example.com</li>
+<li>🌐 https://example.com</li>
 ```
 
 ### 3. 游戏截图
