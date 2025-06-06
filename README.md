@@ -42,7 +42,7 @@
 ```html
 <!-- 需要替换为实际的商店链接 -->
 <a href="https://www.picoxr.com/" class="btn btn-primary">前往PICO商店</a>
-<a href="https://www.meta.com/quest/" class="btn btn-primary">前往Meta商店</a>
+<a href="https://www.meta.com/experiences/badminton-battle/6942168869161691/" class="btn btn-primary">前往Meta商店</a>
 ```
 
 ### 2. 联系信息
